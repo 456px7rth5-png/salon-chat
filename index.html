@@ -7,15 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
     <style>
-        /* HIER ERZWINGEN WIR DAS GOLD/SCHWARZ DESIGN */
         :root {
-            --chat--color-primary: #C5A059 !important; /* GOLD für User */
+            --chat--color-primary: #C5A059 !important;
             --chat--color-primary-shade-50: #b08d4b !important;
-            --chat--color-secondary: #111111 !important; /* SCHWARZ */
+            --chat--color-secondary: #111111 !important;
             --chat--color-white: #ffffff !important;
             --chat--color-light: #f9f9f9 !important;
             
-            --chat--border-radius: 12px !important;
+            --chat--border-radius: 0px !important;
             --chat--header--background: #111111 !important;
             --chat--header--color: #C5A059 !important;
             
@@ -23,19 +22,26 @@
             --chat--message--user--color: #ffffff !important;
         }
 
-        /* Vollbild für Handys erzwingen */
         html, body {
-            margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background-color: #111111;
+            margin: 0 !important; 
+            padding: 0 !important; 
+            width: 100vw !important; 
+            height: 100vh !important; 
+            overflow: hidden !important; 
+            background-color: #111111 !important;
         }
 
         .chat-header h1, .chat-welcome-screen h1 {
             font-family: 'Playfair Display', serif !important;
         }
 
-        /* Am PC wird der Chat elegant zentriert, auf dem Handy bleibt es 100% Vollbild */
-        @media (min-width: 800px) {
-            body { padding-top: 2vh; height: 98vh; background-color: #0a0a0a; }
-            .chat-layout { max-width: 600px !important; margin: 0 auto !important; box-shadow: 0 0 50px rgba(0,0,0,0.8); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
+        /* Zwingt den Chat auf 100% ohne Ränder */
+        .chat-layout { 
+            max-width: 100vw !important; 
+            width: 100vw !important; 
+            height: 100vh !important; 
+            margin: 0 !important; 
+            border-radius: 0 !important;
         }
     </style>
 </head>
@@ -46,7 +52,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const salonId = urlParams.get('salon_id') || 'KEINE_ID';
         
-        // Zwingt n8n, sich nicht an alte Chats zu erinnern
         const resetSession = 'session-' + Date.now();
 
         createChat({
@@ -55,13 +60,11 @@
             sessionId: resetSession,
             metadata: { salon_id: salonId },
             showWelcomeScreen: true,
-            // HIER WIRD NATHAN VERNICHTET:
             initialMessages: [
                 "Здравейте! Добре дошли в нашия салон.",
                 "Мога ли да ви помогна да запазите удобен за вас час?",
                 "Моля, посочете дата и час за вашата среща."
             ],
-            // HIER WIRD DAS MENÜ ÜBERSETZT:
             i18n: {
                 en: {
                     title: 'Salon Exclusive',
