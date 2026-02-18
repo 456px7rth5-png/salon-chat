@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Salon Exclusive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <style>
+        /* HIER ERZWINGEN WIR DAS GOLD/SCHWARZ DESIGN */
+        :root {
+            --chat--color-primary: #C5A059 !important; /* GOLD für User */
+            --chat--color-primary-shade-50: #b08d4b !important;
+            --chat--color-secondary: #111111 !important; /* SCHWARZ */
+            --chat--color-white: #ffffff !important;
+            --chat--color-light: #f9f9f9 !important;
+            
+            --chat--border-radius: 12px !important;
+            --chat--header--background: #111111 !important;
+            --chat--header--color: #C5A059 !important;
+            
+            --chat--message--user--background: #C5A059 !important;
+            --chat--message--user--color: #ffffff !important;
+        }
+
+        /* Vollbild für Handys erzwingen */
+        html, body {
+            margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background-color: #111111;
+        }
+
+        .chat-header h1, .chat-welcome-screen h1 {
+            font-family: 'Playfair Display', serif !important;
+        }
+
+        /* Am PC wird der Chat elegant zentriert, auf dem Handy bleibt es 100% Vollbild */
+        @media (min-width: 800px) {
+            body { padding-top: 2vh; height: 98vh; background-color: #0a0a0a; }
+            .chat-layout { max-width: 600px !important; margin: 0 auto !important; box-shadow: 0 0 50px rgba(0,0,0,0.8); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const salonId = urlParams.get('salon_id') || 'KEINE_ID';
+        
+        // Zwingt n8n, sich nicht an alte Chats zu erinnern
+        const resetSession = 'session-' + Date.now();
+
+        createChat({
+            webhookUrl: 'https://mihailstoychev.app.n8n.cloud/webhook/7509545f-3d2e-449c-970f-fb6948b96d61/chat',
+            mode: 'fullscreen',
+            sessionId: resetSession,
+            metadata: { salon_id: salonId },
+            showWelcomeScreen: true,
+            // HIER WIRD NATHAN VERNICHTET:
+            initialMessages: [
+                "Здравейте! Добре дошли в нашия салон.",
+                "Мога ли да ви помогна да запазите удобен за вас час?",
+                "Моля, посочете дата и час за вашата среща."
+            ],
+            // HIER WIRD DAS MENÜ ÜBERSETZT:
+            i18n: {
+                en: {
+                    title: 'Salon Exclusive',
+                    subtitle: 'Вашият личен асистент',
+                    inputPlaceholder: 'Напишете вашия въпрос..', 
+                },
+            }
+        });
+    </script>
+</body>
+</html>
