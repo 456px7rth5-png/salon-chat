@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Salon Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <style>
+        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background-color: #ffffff; }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const salonId = urlParams.get('salon_id') || 'KEINE_ID_GEFUNDEN';
+        
+        const resetSession = 'session-' + Date.now();
+
+        createChat({
+            webhookUrl: 'https://mihailstoychev.app.n8n.cloud/webhook/7509545f-3d2e-449c-970f-fb6948b96d61/chat',
+            mode: 'fullscreen',
+            sessionId: resetSession,
+            metadata: {
+                salon_id: salonId
+            }
+        });
+    </script>
+</body>
+</html>
